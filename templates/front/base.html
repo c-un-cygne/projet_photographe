@@ -8,16 +8,31 @@
     <script defer src="../../static/sricpt.js"></script>
     <title>Focal</title>
 </head>
-<body>
-    <header>
-        <h1>Focal</h1>
+<body class="min-h-screen flex flex-col">
+    <header class="bg-[#E7A8EB] flex justify-between items-center p-8 mb-auto">
+        <img src="../../static/images/focal logo.png" height="96" width="301"/>
+        <nav>
+            <ul class="flex flex-rox gap-5">
+                <li><button class="px-4 py-1 hover:bg-[#b6e7ff] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#b6caff] rounded-full"><a href="/">Menu</a></button></li>
+                {%if session['user']%}
+                <li><button class="px-4 py-1 hover:bg-[#b6e7ff] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#b6caff] rounded-full"><a href="/publish">Publish</a></button></li>
+                <li><button class="px-4 py-1 hover:bg-[#b6e7ff] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#b6caff] rounded-full"><a href="/disconnect">Disconnect</a></button></li>
+                {%else%}
+                <li><button class="px-4 py-1 hover:bg-[#b6e7ff] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#b6caff] rounded-full"><a href="/login">Log In</a></button></li>
+                <li><button class="px-4 py-1 hover:bg-[#b6e7ff] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#b6caff] rounded-full"><a href="/signup">Sign Up</a></button></li>
+                {%endif%}
+            </ul>
+        </nav>
     </header>
 
-    {%block content%}
-    {% endblock %}
+    <main class="bg-[#A8EBE7] flex-grow">
+        {%block content%}
+        {% endblock %}
+    </main>
 
-    <footer>
-        <h1>Patrick</h1>
+    <footer class="bg-[#EBE7A8] mt-auto">
+        <h1>Patrick Addison 2026</h1>
+        <h1>contact me: patrick.addison45@gmail.com</h1>
     </footer>
 </body>
 </html>
