@@ -1,4 +1,15 @@
 {%extends 'front/base.html'%}
 {%block content%}
 
+    <section class="grid grid-cols-4 grid-rows-2 gap-20 p-5">
+        {%for photo in photos%}
+            <a href="/index/{{photo['_id']}}">
+                <div class=" bg-[1E293B] shadow-2xl border-[#FFFFF] border-solid border-2 rounded-lg">
+                    <img src="{{photo['photo']}}"/>
+                    <footer class="text-[#F8FAFC] flex justify-end text-xs">Published by {{photo['user']}}</footer>
+                </div>
+            </a>
+        {%endfor%}
+    </section>
+
 {%endblock%}
