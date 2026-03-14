@@ -1,0 +1,170 @@
+{%extends 'front/base.html'%}
+{%block content%}
+ 
+<section class="min-h-full flex items-center justify-center py-16 px-4">
+ 
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div style="position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(59,130,246,0.12) 0%,transparent 70%);border-radius:50%;"></div>
+    </div>
+ 
+    <div class="relative w-full max-w-md">
+ 
+        <div style="background:rgba(30,41,59,0.85);border:1px solid rgba(59,130,246,0.2);backdrop-filter:blur(16px);border-radius:1.25rem;box-shadow:0 25px 60px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.03);">
+ 
+            <div style="height:3px;background:linear-gradient(90deg,transparent,#3B82F6,#60A5FA,transparent);border-radius:1.25rem 1.25rem 0 0;"></div>
+ 
+            <div class="p-10">
+ 
+                <div class="text-center mb-10">
+                    <div style="display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);border-radius:0.75rem;margin-bottom:1.25rem;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.8">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
+                        </svg>
+                    </div>
+                    <h1 style="font-family:'Georgia',serif;font-size:1.75rem;font-weight:700;color:#F8FAFC;letter-spacing:-0.02em;margin-bottom:0.4rem;">Créer un compte</h1>
+                    <p style="color:#94A3B8;font-size:0.875rem;">Rejoignez Focal et partagez vos photos</p>
+                </div>
+ 
+                {%if erreur%}
+                    <div style="background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.3);border-radius:0.625rem;padding:0.75rem 1rem;margin-bottom:1.25rem;color:#FCA5A5;font-size:0.875rem;">
+                        {{erreur}}
+                    </div>
+                {%endif%}
+ 
+                <form method="POST" action="/signup" class="space-y-5">
+ 
+                    <div>
+                        <label style="display:block;font-size:0.8rem;font-weight:500;color:#CBD5E1;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.5rem;">
+                            Username
+                        </label>
+                        <div style="position:relative;">
+                            <div style="position:absolute;left:0.875rem;top:50%;transform:translateY(-50%);pointer-events:none;">
+                                <svg width="16" height="16" fill="none" stroke="#64748B" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </div>
+                            <input
+                                type="text"
+                                name="username"
+                                placeholder="votre_pseudo"
+                                required
+                                style="width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(71,85,105,0.6);border-radius:0.625rem;padding:0.75rem 0.875rem 0.75rem 2.75rem;color:#F8FAFC;font-size:0.9375rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s;box-sizing:border-box;"
+                                onfocus="this.style.borderColor='#3B82F6';this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.15)'"
+                                onblur="this.style.borderColor='rgba(71,85,105,0.6)';this.style.boxShadow='none'"
+                            />
+                        </div>
+                    </div>
+ 
+                    <div>
+                        <label style="display:block;font-size:0.8rem;font-weight:500;color:#CBD5E1;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.5rem;">
+                            Email Adress
+                        </label>
+                        <div style="position:relative;">
+                            <div style="position:absolute;left:0.875rem;top:50%;transform:translateY(-50%);pointer-events:none;">
+                                <svg width="16" height="16" fill="none" stroke="#64748B" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+                            </div>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="vous@exemple.com"
+                                required
+                                style="width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(71,85,105,0.6);border-radius:0.625rem;padding:0.75rem 0.875rem 0.75rem 2.75rem;color:#F8FAFC;font-size:0.9375rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s;box-sizing:border-box;"
+                                onfocus="this.style.borderColor='#3B82F6';this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.15)'"
+                                onblur="this.style.borderColor='rgba(71,85,105,0.6)';this.style.boxShadow='none'"
+                            />
+                        </div>
+                    </div>
+ 
+                    <div>
+                        <label style="display:block;font-size:0.8rem;font-weight:500;color:#CBD5E1;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.5rem;">
+                            Password
+                        </label>
+                        <div style="position:relative;">
+                            <div style="position:absolute;left:0.875rem;top:50%;transform:translateY(-50%);pointer-events:none;">
+                                <svg width="16" height="16" fill="none" stroke="#64748B" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            </div>
+                            <input
+                                type="password"
+                                name="password"
+                                id="pwd-signup"
+                                placeholder="••••••••"
+                                required
+                                style="width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(71,85,105,0.6);border-radius:0.625rem;padding:0.75rem 2.75rem 0.75rem 2.75rem;color:#F8FAFC;font-size:0.9375rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s;box-sizing:border-box;"
+                                onfocus="this.style.borderColor='#3B82F6';this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.15)'"
+                                onblur="this.style.borderColor='rgba(71,85,105,0.6)';this.style.boxShadow='none'"
+                            />
+                            <button type="button"
+                                style="position:absolute;right:0.875rem;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#64748B;padding:0;transition:color 0.2s;"
+                                onmouseover="this.style.color='#94A3B8'" onmouseout="this.style.color='#64748B'">
+                                <svg id="eye-signup" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div style="margin-top:0.5rem;">
+                            <div style="display:flex;gap:4px;margin-bottom:4px;">
+                                <div id="s1" style="flex:1;height:3px;background:rgba(71,85,105,0.4);border-radius:2px;transition:background 0.3s;"></div>
+                                <div id="s2" style="flex:1;height:3px;background:rgba(71,85,105,0.4);border-radius:2px;transition:background 0.3s;"></div>
+                                <div id="s3" style="flex:1;height:3px;background:rgba(71,85,105,0.4);border-radius:2px;transition:background 0.3s;"></div>
+                                <div id="s4" style="flex:1;height:3px;background:rgba(71,85,105,0.4);border-radius:2px;transition:background 0.3s;"></div>
+                            </div>
+                            <p id="strength-label" style="font-size:0.75rem;color:#475569;"></p>
+                        </div>
+                    </div>
+ 
+                    <div>
+                        <label style="display:block;font-size:0.8rem;font-weight:500;color:#CBD5E1;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.5rem;">
+                            Confirmer le mot de passe
+                        </label>
+                        <div style="position:relative;">
+                            <div style="position:absolute;left:0.875rem;top:50%;transform:translateY(-50%);pointer-events:none;">
+                                <svg width="16" height="16" fill="none" stroke="#64748B" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                            </div>
+                            <input
+                                type="password"
+                                name="confirm_password"
+                                id="pwd-confirm"
+                                placeholder="••••••••"
+                                required
+                                style="width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(71,85,105,0.6);border-radius:0.625rem;padding:0.75rem 0.875rem 0.75rem 2.75rem;color:#F8FAFC;font-size:0.9375rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s;box-sizing:border-box;"
+                                onfocus="this.style.borderColor='#3B82F6';this.style.boxShadow='0 0 0 3px rgba(59,130,246,0.15)'"
+                                onblur="this.style.borderColor='rgba(71,85,105,0.6)';this.style.boxShadow='none'"
+                            />
+                        </div>
+                        <p id="match-label" style="font-size:0.75rem;margin-top:4px;"></p>
+                    </div>
+ 
+                    <label style="display:flex;align-items:flex-start;gap:0.625rem;cursor:pointer;">
+                        <input type="checkbox" name="terms" required style="width:16px;height:16px;accent-color:#3B82F6;cursor:pointer;margin-top:2px;flex-shrink:0;"/>
+                        <span style="font-size:0.875rem;color:#94A3B8;line-height:1.5;">
+                            J'accepte les <a href="/terms" style="color:#3B82F6;text-decoration:none;" onmouseover="this.style.color='#60A5FA'" onmouseout="this.style.color='#3B82F6'">conditions d'utilisation</a> et la <a href="/privacy" style="color:#3B82F6;text-decoration:none;" onmouseover="this.style.color='#60A5FA'" onmouseout="this.style.color='#3B82F6'">politique de confidentialité</a>
+                        </span>
+                    </label>
+ 
+                    <button type="submit"
+                        style="width:100%;background:linear-gradient(135deg,#3B82F6,#2563EB);color:#F8FAFC;font-size:0.9375rem;font-weight:600;padding:0.875rem;border-radius:0.625rem;border:none;cursor:pointer;transition:all 0.2s;letter-spacing:0.01em;box-shadow:0 4px 15px rgba(37,99,235,0.35);margin-top:0.5rem;"
+                        onmouseover="this.style.background='linear-gradient(135deg,#60A5FA,#3B82F6)';this.style.boxShadow='0 6px 20px rgba(59,130,246,0.45)';this.style.transform='translateY(-1px)'"
+                        onmouseout="this.style.background='linear-gradient(135deg,#3B82F6,#2563EB)';this.style.boxShadow='0 4px 15px rgba(37,99,235,0.35)';this.style.transform='translateY(0)'">
+                        Créer mon compte
+                    </button>
+ 
+                </form>
+ 
+                <div style="display:flex;align-items:center;gap:1rem;margin:1.75rem 0;">
+                    <div style="flex:1;height:1px;background:rgba(71,85,105,0.4);"></div>
+                    <span style="font-size:0.8rem;color:#475569;">Déjà inscrit ?</span>
+                    <div style="flex:1;height:1px;background:rgba(71,85,105,0.4);"></div>
+                </div>
+ 
+                <a href="/login"
+                    style="display:block;text-align:center;width:100%;background:transparent;color:#60A5FA;font-size:0.9375rem;font-weight:500;padding:0.75rem;border-radius:0.625rem;border:1px solid rgba(59,130,246,0.35);text-decoration:none;transition:all 0.2s;box-sizing:border-box;"
+                    onmouseover="this.style.background='rgba(59,130,246,0.08)';this.style.borderColor='rgba(59,130,246,0.6)'"
+                    onmouseout="this.style.background='transparent';this.style.borderColor='rgba(59,130,246,0.35)'">
+                    Se connecter
+                </a>
+ 
+            </div>
+        </div>
+ 
+    </div>
+</section>
+
+{%endblock%}

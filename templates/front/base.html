@@ -9,10 +9,18 @@
     <title>Focal</title>
 </head>
 <body class="min-h-screen flex flex-col">
-    <header class="bg-[#1E293B] flex justify-between items-center p-8 mb-auto">
+    <header class="relative bg-[#1E293B] flex justify-between items-center p-8 mb-auto">
         <img src="../../static/images/focal_logo.png" height="96" width="301"/>
+        <div class="absolute left-1/2 transform -translate-x-1/2">
+            {%if session.get('user')%}
+                <a href="/profile/{{session['user']}}" 
+                class="text-[#F8FAFC] font-semibold text-lg hover:text-[#60A5FA] transition-colors duration-200">
+                    {{session['user']}}
+                </a>
+            {%endif%}
+        </div>
         <nav>
-            <ul class="flex flex-rox gap-5">
+            <ul class="flex flex-row gap-5">
                 <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/">Menu</a></button></li>
                 {%if session['user']%}
                 <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/publish">Publish</a></button></li>
