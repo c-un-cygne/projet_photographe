@@ -57,6 +57,13 @@ def login():
         return redirect(url_for('index'))
     return render_template('login.html')
 
+@app.route('/profile')
+def profile():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    user = db['users'].find_one({'username': session['user']}, {'password': 0})
+    post_count = db['photos'].count_documents({'user': session['user']})
+    return render_template('profile.html', user=user, post_count=post_count, follower_count=0, following_count=0)
 
 @app.route('/disconnect')
 def disconnect():
@@ -82,6 +89,20 @@ def publish():
         return redirect(url_for('index'))
     else:
         return render_template('publish.html', erreur = "Fill in all the mandatory fields")
+
+@app.route('/search')
+def search():
+    query = request.args.get('q','').strip()
+    if query=='':
+        res = list(db['photos'].find({}))
+    else:
+        res = list(db['photos'].find({
+            "$or":[
+                {"title" : {"$regex":query,"$options":"i"}},
+                {"type":{"$regex":query,"$options":"i"}}
+            ]
+        }))
+    return render_template("search_result.html", photos=res[::-1], query=query)
 
 @app.route('/index/<id_photo>')
 def article_open(id_photo):

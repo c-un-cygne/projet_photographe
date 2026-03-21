@@ -7,7 +7,7 @@
 
         <a href="/" class="inline-flex items-center gap-2 text-[#64748B] text-sm no-underline mb-7 hover:text-[#94A3B8] transition-colors duration-200">
             <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            Retour à la galerie
+            Return to the gallery
         </a>
 
         {% if photo %}
@@ -39,7 +39,7 @@
                         {{ photo['user'][0] | upper }}
                     </div>
                     <span class="text-slate-400 text-sm">
-                        Par <a href="/profile/{{ photo['user'] }}" class="text-blue-400 no-underline hover:text-blue-300 transition-colors duration-200">{{ photo['user'] }}</a>
+                        By <a href="/profile/{{ photo['user'] }}" class="text-blue-400 no-underline hover:text-blue-300 transition-colors duration-200">{{ photo['user'] }}</a>
                     </span>
                 </div>
 
@@ -66,7 +66,7 @@
 
                     {% if photo.get('location_lat') and photo.get('location_long') %}
                     <div class="flex-1 min-w-[180px] rounded-xl p-4 bg-[#0F172A]/50 border border-slate-600/40">
-                        <p class="text-xs tracking-widest uppercase text-slate-500 mb-1">Localisation</p>
+                        <p class="text-xs tracking-widest uppercase text-slate-500 mb-1">Location</p>
                         <div class="flex items-center gap-2">
                             <svg width="15" height="15" fill="none" stroke="#60A5FA" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                             <span class="text-slate-300 text-sm">{{ photo['location_lat'] }}, {{ photo['location_long'] }}</span>
@@ -99,7 +99,7 @@
             </svg>
             <p class="text-slate-500 text-base mb-6">Cette photo est introuvable.</p>
             <a href="/" class="inline-block text-slate-50 text-sm font-semibold px-6 py-3 rounded-xl no-underline bg-gradient-to-br from-blue-500 to-blue-700 hover:opacity-90 transition-opacity duration-200">
-                ← Retour à la galerie
+                ← Return to the gallery
             </a>
         </div>
 

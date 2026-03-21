@@ -1,0 +1,20 @@
+{%extends 'front/base.html'%}
+{%block content%}
+    <div>
+        {%if photos|length == 0 %}
+            <h2 class="grid place-content-center text-xl text-white py-3">No results for "{{query}}"</h2>
+        {%else%}
+            <h2 class="grid place-content-center text-xl text-white py-3">Results for "{{query}}"</h2>
+        {%endif%}
+    </div>
+    <section class="grid grid-cols-4 grid-rows-2 gap-20 p-5">
+        {%for photo in photos%}
+            <a href="/index/{{photo['_id']}}">
+                <div class=" bg-[1E293B] shadow-2xl">
+                    <img src="{{photo['photo']}}"/>
+                </div>
+            </a>
+        {%endfor%}
+    </section>
+
+{%endblock%}
