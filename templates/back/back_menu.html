@@ -24,8 +24,8 @@
                             </select>
                         </form>
                     </td>
-                    <td><a>Voir</a></td>
-                    <td><a>Supprimer</a></td>
+                    <td><a href="">Voir</a></td>
+                    <td><a href="{{url_for('delete_user', user_id=user['_id'])}}" onclick="return confirm('Delete this user?')">Supprimer</a></td>
                 </tr>
             </tbody>
         </table>
