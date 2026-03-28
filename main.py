@@ -27,10 +27,10 @@ def signup():
         db_users = db['users']
 
         if db_users.find_one({'username': request.form['username']}):
-            return render_template('signup.html', erreur="Nom d'utilisateur déjà pris.")
+            return render_template('front/signup.html', erreur="Nom d'utilisateur déjà pris.")
         
         if request.form['password'] != request.form['confirm_password']:
-            return render_template('signup.html', erreur="Les mots de passe ne correspondent pas.")
+            return render_template('front/signup.html', erreur="Les mots de passe ne correspondent pas.")
         
         db_users.insert_one({
             'username': request.form['username'],
@@ -40,7 +40,7 @@ def signup():
         })
         session['user'] = request.form['username']
         return redirect(url_for('index'))
-    return render_template('signup.html')
+    return render_template('front/signup.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -50,12 +50,12 @@ def login():
 
         user = db_users.find_one({'username': request.form['username']})
         if not user:
-            return render_template('login.html', erreur="Utilisateur introuvable.")
+            return render_template('front/login.html', erreur="Utilisateur introuvable.")
         if not bcrypt.check_password_hash(user['password'], request.form['password']):
-            return render_template('login.html', erreur="Mot de passe incorrect.")
+            return render_template('front/login.html', erreur="Mot de passe incorrect.")
         session['user'] = request.form['username']
         return redirect(url_for('index'))
-    return render_template('login.html')
+    return render_template('front/login.html')
 
 @app.route('/profile')
 def profile():
@@ -63,7 +63,7 @@ def profile():
         return redirect(url_for('login'))
     user = db['users'].find_one({'username': session['user']}, {'password': 0})
     post_count = db['photos'].count_documents({'user': session['user']})
-    return render_template('profile.html', user=user, post_count=post_count, follower_count=0, following_count=0)
+    return render_template('front/profile.html', user=user, post_count=post_count, follower_count=0, following_count=0)
 
 @app.route('/disconnect')
 def disconnect():
@@ -73,7 +73,7 @@ def disconnect():
 @app.route('/publish', methods = ["POST","GET"])
 def publish():
     if 'user' not in session:
-        return render_template('register.html')
+        return render_template('front/register.html')
     if request.method == "POST":
         db_photos = db["photos"]
         if request.form['title'] and request.form['image']:
@@ -88,7 +88,7 @@ def publish():
             })
         return redirect(url_for('index'))
     else:
-        return render_template('publish.html', erreur = "Fill in all the mandatory fields")
+        return render_template('front/publish.html', erreur = "Fill in all the mandatory fields")
 
 @app.route('/search')
 def search():
@@ -102,11 +102,15 @@ def search():
                 {"type":{"$regex":query,"$options":"i"}}
             ]
         }))
-    return render_template("search_result.html", photos=res[::-1], query=query)
+    return render_template("front/search_result.html", photos=res[::-1], query=query)
 
 @app.route('/index/<id_photo>')
 def article_open(id_photo):
     res = db['photos'].find_one({'_id':ObjectId(id_photo)})
-    return render_template('article_open.html', photo = res)
+    return render_template('front/article_open.html', photo = res)
+
+#-----------ADMIN-----------
+
+
 
 app.run(host='0.0.0.0', port=81)

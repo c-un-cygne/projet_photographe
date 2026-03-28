@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="../../static/style.css" rel="stylesheet" type="text/css"/>
+    <script defer src="../../static/sricpt.js"></script>
+    <title>Focal</title>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="relative bg-white flex justify-between items-center py-4 px-8 mb-auto">
+        <img src="../../static/images/focal_logo.png" height="52" width="163"/>
+        <h3>Connected as admin</h3>
+        <div class="absolute left-1/2 transform -translate-x-1/2">
+            {%if session.get('user')%}
+                <a href="/profile/{{session['user']}}" 
+                class="text-[#F8FAFC] font-semibold text-lg hover:text-[#60A5FA] transition-colors duration-200">
+                    {{session['user']}}
+                </a>
+            {%endif%}
+        </div>
+        <form action="/search" method="get" class="">
+            <input type="text" name="q" placeholder="Search" class="">
+            <button type="submit" class="">🔎</button>
+        </form>
+        <nav>
+            <ul class="flex flex-row gap-5">
+                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/">Menu</a></button></li>
+                {%if session['user']%}
+                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/publish">Publish</a></button></li>
+                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/profile">Profile</a></button></li>
+                {%else%}
+                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/login">Log In</a></button></li>
+                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/signup">Sign Up</a></button></li>
+                {%endif%}
+            </ul>
+        </nav>
+    </header>
+
+    <main class="bg-[#0F172A] flex-grow">
+        {%block content%}
+        {% endblock %}
+    </main>
+
+    <footer class="bg-white mt-auto">
+        <h1 class="text-[#F8FAFC]">Patrick Addison 2026</h1>
+        <h1 class="text-[#F8FAFC]">contact me: patrick.addison45@gmail.com</h1>
+    </footer>
+</body>
+</html>

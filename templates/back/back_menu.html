@@ -1,0 +1,55 @@
+{%extends 'back_base.html'%}
+
+{%block content%}
+
+<main>
+    <h1>All users</h1>
+    <!--User table-->
+    <section>
+        <table>
+            <thead>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Number of photos</th>
+            </thead>
+            <tbody>
+                {%for user in users%}
+                <tr>
+                    <td>{{user['username']}}</td>
+                    <td>
+                        <form action="{{url_for('change_role'), user_id = user['_id']}}" method="POST">
+                            <select name="role" onchange="this.form.submit()">
+                                <option value="user" {%if user["role"] == "user"%} selected {%endif%}>user</option>
+                                <option value="user" {%if user["role"] == "admin"%} selected {%endif%}>admin</option>
+                            </select>
+                        </form>
+                    </td>
+                    <td><a>Voir</a></td>
+                    <td><a>Supprimer</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <!--Photo table-->
+    <section>
+        <table>
+            <thead>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Number of photos</th>
+            </thead>
+            <tbody>
+                {%for photo in photos%}
+                <tr>
+                    <td>{{photo['title']}}</td>
+                    <td>{{photo['type']}}</td>
+                    <td><a>See</a></td>
+                    <td><a>Edit</a></td>
+                    <td><a>Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+{%endblock%}
