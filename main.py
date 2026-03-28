@@ -53,7 +53,8 @@ def login():
             return render_template('front/login.html', erreur="Utilisateur introuvable.")
         if not bcrypt.check_password_hash(user['password'], request.form['password']):
             return render_template('front/login.html', erreur="Mot de passe incorrect.")
-        session['user'] = request.form['username']
+        session['user'] = user
+        session['role'] = user['role']
         return redirect(url_for('index'))
     return render_template('front/login.html')
 
@@ -110,7 +111,20 @@ def article_open(id_photo):
     return render_template('front/article_open.html', photo = res)
 
 #-----------ADMIN-----------
+@app.route('/admin')
+def admin():
+    photos_data = list(db['photos'].find({}))
+    user_data = list(db['users'].find({}))
+    if session['user'] and session['role'] == 'admin':
+        return render_template("back/back_menu.html", photos=photos_data, users = user_data)
+    else:
+        return render_template('index.html', erreur="You don't have the acces rights", photos=photos_data, users = user_data)
 
-
+@app.route('admin/update_role/<user_id>')
+def update_role(user_id):
+    if session['user'] and session['role'] == 'admin':
+        new_role = request.form.get('role')
+        db['users'].update_one({"_id" : ObjectId(user_id)},{'$set' : {'role':new_role}})
+    return redirect(url_for('admin'))
 
 app.run(host='0.0.0.0', port=81)
