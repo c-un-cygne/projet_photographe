@@ -10,23 +10,23 @@
 </head>
 <body class="min-h-screen flex flex-col">
     <header class="relative bg-[#1E293B] flex justify-between items-center py-4 px-8 mb-auto">
-        <img src="../../static/images/focal_logo.png" height="52" width="163"/>
-        <div class="absolute left-1/2 transform -translate-x-1/2">
-            {%if session.get('user')%}
-                <a href="/profile/{{session['user']}}" 
-                class="text-[#F8FAFC] font-semibold text-lg hover:text-[#60A5FA] transition-colors duration-200">
-                    {{session['user']}}
-                </a>
-            {%endif%}
-        </div>
-        <form action="/search" method="get" class="">
-            <input type="text" name="q" placeholder="Search" class="">
-            <button type="submit" class="">🔎</button>
+        <a href="/"><img src="../../static/images/focal_logo.png" height="52" width="163"/></a>
+        <form action="/search" method="get" class="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
+            <input type="text" name="q" placeholder="Search..." 
+                class="bg-[#334155] text-white px-3 py-1 rounded-full outline-none"/>
+            <button type="submit" 
+                    class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] rounded-full">
+                Search
+            </button>
         </form>
         <nav>
             <ul class="flex flex-row gap-5">
+                {%if session.get('user')%} 
+                <li class="text-[#60A5FA] font-semibold"><a href="/profile/{{session['user']}}">{{session['user']}}</a></li>
+                <li class="text-[#475569]">|</li>
+                {%endif%}
                 <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/">Menu</a></button></li>
-                {%if session['user']%}
+                {%if session.get('user')%}                
                 <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/publish">Publish</a></button></li>
                 <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/profile">Profile</a></button></li>
                 {%else%}
