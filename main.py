@@ -53,7 +53,7 @@ def login():
             return render_template('front/login.html', erreur="Utilisateur introuvable.")
         if not bcrypt.check_password_hash(user['password'], request.form['password']):
             return render_template('front/login.html', erreur="Mot de passe incorrect.")
-        session['user'] = user
+        session['user'] = user['username']
         session['role'] = user['role']
         return redirect(url_for('index'))
     return render_template('front/login.html')
@@ -69,27 +69,29 @@ def profile():
 @app.route('/disconnect')
 def disconnect():
     session.pop('user', None)
+    session.pop('role', None)
     return redirect(url_for('index'))
 
 @app.route('/publish', methods = ["POST","GET"])
 def publish():
     if 'user' not in session:
-        return render_template('front/register.html')
+        return redirect(url_for('login'))
     if request.method == "POST":
         db_photos = db["photos"]
         if request.form['title'] and request.form['image']:
             db_photos.insert_one({
-                'photo':request.form['image'],
-                'description':request.form['description'],
-                'title':request.form['title'],
+                'photo': request.form['image'],
+                'description': request.form['description'],
+                'title': request.form['title'],
                 'user': session['user'],
                 'location_lat': request.form['location_lat'],
                 'location_long': request.form['location_long'],
                 'type': request.form['type'],
             })
-        return redirect(url_for('index'))
-    else:
-        return render_template('front/publish.html', erreur = "Fill in all the mandatory fields")
+            return redirect(url_for('index'))
+        else:
+            return render_template('front/publish.html', erreur="Fill in all the mandatory fields")
+    return render_template('front/publish.html')
 
 @app.route('/search')
 def search():
@@ -120,11 +122,17 @@ def admin():
     else:
         return render_template('index.html', erreur="You don't have the acces rights", photos=photos_data, users = user_data)
 
-@app.route('admin/update_role/<user_id>')
+@app.route('/admin/update_role/<user_id>')
 def update_role(user_id):
     if session['user'] and session['role'] == 'admin':
         new_role = request.form.get('role')
         db['users'].update_one({"_id" : ObjectId(user_id)},{'$set' : {'role':new_role}})
+    return redirect(url_for('admin'))
+
+@app.route('/admin/delete_user/<user_id>')
+def delete_user(user_id):
+    if session['user'] and session['role'] == 'admin':
+        db['users'].delete_one({"_id" : ObjectId(user_id)})
     return redirect(url_for('admin'))
 
 app.run(host='0.0.0.0', port=81)
