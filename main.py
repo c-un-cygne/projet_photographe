@@ -64,7 +64,9 @@ def profile():
         return redirect(url_for('login'))
     user = db['users'].find_one({'username': session['user']}, {'password': 0})
     post_count = db['photos'].count_documents({'user': session['user']})
-    return render_template('front/profile.html', user=user, post_count=post_count, follower_count=0, following_count=0)
+    follower_count = db['follows'].count_documents({'user_2': session['user']})
+    following_count = db['follows'].count_documents({'user_1': session['user']})
+    return render_template('front/profile.html', user=user, post_count=post_count, follower_count=follower_count, following_count=following_count)
 
 @app.route('/disconnect')
 def disconnect():
@@ -111,6 +113,46 @@ def search():
 def article_open(id_photo):
     res = db['photos'].find_one({'_id':ObjectId(id_photo)})
     return render_template('front/article_open.html', photo = res)
+
+@app.route('/user/<username>')
+def user(username):
+    user = db['users'].find_one({'username': username}, {'password': 0})
+    post_count = db['photos'].count_documents({'user': username})
+    follower_count = db['follows'].count_documents({'user_2': username})
+    following_count = db['follows'].count_documents({'user_1': username})
+    is_self = session.get('user') == username
+    is_following = bool(db['follows'].find_one({'user_1': session.get('user'), 'user_2': username})) if session.get('user') else False
+    return render_template('front/public_profile.html', user=user, post_count=post_count, follower_count=follower_count, following_count=following_count, is_self=is_self, is_following=is_following)
+
+@app.route('/follow/<username>')
+def follow(username):
+    if not session.get('user'):
+        return redirect(url_for('signup'))
+    if session['user'] == username:
+        return redirect(url_for('user', username=username))
+    already = db['follows'].find_one({'user_1': session['user'], 'user_2': username})
+    if not already:
+        db['follows'].insert_one({
+            'user_1': session['user'],
+            'user_2': username
+        })
+    return redirect(url_for('user', username=username))
+
+@app.route('/unfollow/<username>')
+def unfollow(username):
+    if not session.get('user'):
+        return redirect(url_for('login'))
+    db['follows'].delete_one({'user_1': session['user'], 'user_2': username})
+    return redirect(url_for('user', username=username))
+
+@app.route('/feed')
+def feed():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    follow_docs = db['follows'].find({'user_1': session['user']})
+    following = [doc['user_2'] for doc in follow_docs]
+    photos = list(db['photos'].find({'user': {'$in': following}}).sort('_id', -1))
+    return render_template('index.html', photos=photos)
 
 #-----------ADMIN-----------
 @app.route('/admin')

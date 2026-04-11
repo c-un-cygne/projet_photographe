@@ -22,11 +22,12 @@
         <nav>
             <ul class="flex flex-row gap-5">
                 {%if session.get('user')%} 
-                <li class="text-[#60A5FA] font-semibold"><a href="/profile/{{session['user']}}">{{session['user']}}</a></li>
+                <li class="text-[#60A5FA] font-semibold"><a href="/user/{{session['user']}}">{{session['user']}}</a></li>
                 <li class="text-[#475569]">|</li>
                 {%endif%}
                 <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/">Menu</a></button></li>
-                {%if session.get('user')%}                
+                {%if session.get('user')%}
+                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/feed">Feed</a></button></li>
                 <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/publish">Publish</a></button></li>
                 <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/profile">Profile</a></button></li>
                 {%else%}
