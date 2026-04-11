@@ -55,6 +55,8 @@ def login():
             return render_template('front/login.html', erreur="Mot de passe incorrect.")
         session['user'] = user['username']
         session['role'] = user['role']
+        if session['user'] and session['role'] == 'admin':
+            return redirect(url_for('admin'))
         return redirect(url_for('index'))
     return render_template('front/login.html')
 
@@ -164,11 +166,11 @@ def admin():
     else:
         return render_template('index.html', erreur="You don't have the acces rights", photos=photos_data, users = user_data)
 
-@app.route('/admin/update_role/<user_id>')
+@app.route('/admin/update_role/<user_id>', methods=['GET', 'POST'])
 def update_role(user_id):
-    if session['user'] and session['role'] == 'admin':
+    if session.get('user') and session.get('role') == 'admin':
         new_role = request.form.get('role')
-        db['users'].update_one({"_id" : ObjectId(user_id)},{'$set' : {'role':new_role}})
+        db['users'].update_one({"_id": ObjectId(user_id)}, {'$set': {'role': new_role}})
     return redirect(url_for('admin'))
 
 @app.route('/admin/delete_user/<user_id>')
