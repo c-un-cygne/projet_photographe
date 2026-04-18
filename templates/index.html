@@ -1,14 +1,26 @@
 {%extends 'front/base.html'%}
 {%block content%}
 
-    <section class="grid grid-cols-4 grid-rows-2 gap-20 p-5">
-        {%for photo in photos%}
-            <a href="/index/{{photo['_id']}}">
-                <div class=" bg-[1E293B] shadow-2xl">
-                    <img src="{{photo['photo']}}"/>
+<section class="columns-2 md:columns-3 lg:columns-4 gap-4 p-6 space-y-4">
+    {%for photo in photos%}
+        <a href="/index/{{photo['_id']}}" class="block mb-4 break-inside-avoid group">
+            <div class="relative overflow-hidden rounded-xl shadow-lg bg-[#1E293B]">
+                <img 
+                    src="{{photo['photo']}}"
+                    alt="{{photo['title']}}"
+                    class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                />
+                <!-- Overlay au hover -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <div>
+                        <p class="text-white font-semibold text-sm">{{photo['title']}}</p>
+                        <p class="text-gray-300 text-xs">{{photo['user']}}</p>
+                    </div>
                 </div>
-            </a>
-        {%endfor%}
-    </section>
+            </div>
+        </a>
+    {%endfor%}
+</section>
 
 {%endblock%}

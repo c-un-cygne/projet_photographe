@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from werkzeug.utils import secure_filename
 import os
 from dotenv import load_dotenv
 from flask_bcrypt import Bcrypt
@@ -82,9 +83,17 @@ def publish():
         return redirect(url_for('login'))
     if request.method == "POST":
         db_photos = db["photos"]
+        
         if request.form['title'] and request.form['image']:
+
+            image = request.files['image']
+            nom_fichier = secure_filename(image)
+            chemin = os.path.join(app.static_folder, 'images/photos', nom_fichier)
+            image.save(chemin)
+            image_path = f"/static/images/photos/{nom_fichier}"
+
             db_photos.insert_one({
-                'photo': request.form['image'],
+                'photo': image_path,
                 'description': request.form['description'],
                 'title': request.form['title'],
                 'user': session['user'],
