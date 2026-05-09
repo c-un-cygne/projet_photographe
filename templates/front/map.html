@@ -1,0 +1,56 @@
+{%extends 'front/base.html'%}
+{%block content%}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<form method="GET" action="/map">
+    {% if lat and lng%}
+        <p id="coords" class="text-white text-center py-3">Lat: {{lat}}   |   Lng: {{lng}}</p>
+    {%else%}
+        <p id="coords" class="text-white text-center py-3">Click on the map to get coordinates.</p>
+    {%endif%}
+    <input type="hidden" name="lat" id="lat-input"/>
+    <input type="hidden" name="lng" id="lng-input"/>
+    <button type="submit" class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] rounded-full block mx-auto mb-4">Confirm location</button>
+</form>
+
+<div id="map" style="height: 500px;"></div>
+
+<script>
+    const map = L.map('map').setView([48.8566, 2.3522], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    map.on('click', function(e) {
+        const lat = e.latlng.lat.toFixed(6);
+        const lng = e.latlng.lng.toFixed(6);
+        document.getElementById('coords').textContent = 'Lat: ' + lat + '   |   Lng: ' + lng;
+        document.getElementById('lat-input').value = lat;
+        document.getElementById('lng-input').value = lng;
+    });
+</script>
+
+{%if lat and lng%}
+    <section class="columns-2 md:columns-3 lg:columns-4 gap-4 p-6 space-y-4">
+        {%for photo in photos%}
+            <a href="/index/{{photo['_id']}}" class="block mb-4 break-inside-avoid group">
+                <div class="relative overflow-hidden rounded-xl shadow-lg bg-[#1E293B]">
+                    <img 
+                        src="{{photo['photo']}}"
+                        alt="{{photo['title']}}"
+                        class="w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        loading="lazy"
+                    />
+                    <!-- Overlay au hover -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                        <div>
+                            <p class="text-white font-semibold text-sm">{{photo['title']}}</p>
+                            <p class="text-gray-300 text-xs">{{photo['user']}}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {%endfor%}
+    </section>
+{%endif%}
+
+{%endblock%}

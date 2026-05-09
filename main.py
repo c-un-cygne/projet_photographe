@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 import os
 from dotenv import load_dotenv
 from flask_bcrypt import Bcrypt
+import math
 
 load_dotenv()
 
@@ -164,6 +165,22 @@ def feed():
     following = [doc['user_2'] for doc in follow_docs]
     photos = list(db['photos'].find({'user': {'$in': following}}).sort('_id', -1))
     return render_template('index.html', photos=photos)
+
+@app.route('/map', methods=['GET'])
+def map_page():
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+    photos = list(db['photos'].find({}))
+    photo_dist = []
+    if lat and lng:
+        for i in photos:
+            dx = float(lng)-float(i['location_long'])
+            dy = float(lat)-float(i['location_lat'])
+            dist = math.sqrt(dx**2+dy**2)
+            photo_dist.append((i,dist))
+        photo_dist = sorted(photo_dist, key=lambda x: x[1])
+    photos_sorted = [p[0] for p in photo_dist]
+    return render_template('front/map.html', lat=lat, lng=lng, photos=photos_sorted)
 
 #-----------ADMIN-----------
 @app.route('/admin')
