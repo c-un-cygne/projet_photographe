@@ -6,11 +6,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <form method="GET" action="/map">
-    {% if lat and lng%}
-        <p id="coords" class="text-white text-center py-3">Lat: {{lat}}   |   Lng: {{lng}}</p>
-    {%else%}
-        <p id="coords" class="text-white text-center py-3">Click on the map to get coordinates.</p>
-    {%endif%}
+    <p id="coords" class="text-white text-center py-3">{% if lat and lng %}Lat: {{lat}}   |   Lng: {{lng}}{% else %}Click on the map to get coordinates.{% endif %}</p>
     <input type="hidden" name="lat" id="lat-input"/>
     <input type="hidden" name="lng" id="lng-input"/>
     <button type="submit" class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] rounded-full block mx-auto mb-4">Confirm location</button>
