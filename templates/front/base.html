@@ -25,18 +25,18 @@
                 <li class="text-[#60A5FA] font-semibold"><a href="/user/{{session['user']}}">{{session['user']}}</a></li>
                 <li class="text-[#475569]">|</li>
                 {%endif%}
-                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/">Menu</a></button></li>
-                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/map">Map</a></button></li>
+                <li><a href="/"><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full">Menu</button></a></li>
+                <li><a href="/map"><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full">Map</button></a></li>
                 {%if session.get('user')%}
                 {%if session.get('role') == 'admin'%}
-                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/admin">Admin</a></button></li>
+                <li><a href="/admin"><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full">Admin</button></a></li>
                 {%endif%}
-                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/feed">Feed</a></button></li>
-                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/publish">Publish</a></button></li>
-                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/profile">Profile</a></button></li>
+                <li><a href="/feed"><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full">Feed</button></a></li>
+                <li><a href="/publish"><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full">Publish</button></a></li>
+                <li><a href="/profile"><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full">Profile</button></a></li>
                 {%else%}
-                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/login">Log In</a></button></li>
-                <li><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full"><a href="/signup">Sign Up</a></button></li>
+                <li><a href="/login"><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full">Log In</button></a></li>
+                <li><a href="/signup"><button class="text-[#F8FAFC] bg-[#3B82F6] px-4 py-1 hover:bg-[#60A5FA] active:bg-[#b6caff] focus:outline-none focus:ring focus:ring-[#2563EB] rounded-full">Sign Up</button></a></li>
                 {%endif%}
             </ul>
         </nav>

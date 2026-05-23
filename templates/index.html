@@ -16,6 +16,8 @@
                     <div>
                         <p class="text-white font-semibold text-sm">{{photo['title']}}</p>
                         <p class="text-gray-300 text-xs">{{photo['user']}}</p>
+                        <p class="text-gray-300 text-xs">{{ photo['likes'] }} {% if photo['likes'] == 1 %}like{% else %}likes{% endif %}</p>
+
                     </div>
                 </div>
             </div>

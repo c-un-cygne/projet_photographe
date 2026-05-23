@@ -85,10 +85,10 @@ def publish():
     if request.method == "POST":
         db_photos = db["photos"]
         
-        if request.form['title'] and request.form['image']:
+        if request.form['title'] and request.files['image']:
 
             image = request.files['image']
-            nom_fichier = secure_filename(image)
+            nom_fichier = secure_filename(image.filename)
             chemin = os.path.join(app.static_folder, 'images/photos', nom_fichier)
             image.save(chemin)
             image_path = f"/static/images/photos/{nom_fichier}"
@@ -101,11 +101,37 @@ def publish():
                 'location_lat': request.form['location_lat'],
                 'location_long': request.form['location_long'],
                 'type': request.form['type'],
+                'likes':0,
+                'liked_by': [],
             })
             return redirect(url_for('index'))
         else:
             return render_template('front/publish.html', erreur="Fill in all the mandatory fields")
     return render_template('front/publish.html')
+
+@app.route('/photo/like/<id_photo>')
+def like_photo(id_photo):
+    if 'user' not in session:
+        return redirect(url_for('login'))
+
+    user = session['user']
+
+    photo = db['photos'].find_one({'_id' : ObjectId(id_photo)})
+
+    if not photo:
+        return redirect(url_for('index'))
+    
+    if user in photo.get('liked_by', []):
+        db['photos'].update_one({'_id': ObjectId(id_photo)},
+                            {'$inc': {'likes':-1}, '$pull': {'liked_by':user}}
+                            )
+    else:
+        db['photos'].update_one({'_id': ObjectId(id_photo)},
+                                {'$inc': {'likes':1}, '$push': {'liked_by':user}}
+                                )
+    
+    return redirect(url_for('article_open',id_photo=id_photo))
+
 
 @app.route('/search')
 def search():
@@ -163,7 +189,7 @@ def feed():
         return redirect(url_for('login'))
     follow_docs = db['follows'].find({'user_1': session['user']})
     following = [doc['user_2'] for doc in follow_docs]
-    photos = list(db['photos'].find({'user': {'$in': following}}).sort('_id', -1))
+    photos = list(db['photos'].find({'user': {'$in': following}}).sort('likes', -1))
     return render_template('index.html', photos=photos)
 
 @app.route('/map', methods=['GET'])
