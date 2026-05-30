@@ -1,0 +1,11 @@
+/*form validation*/
+.invalide-field {
+    border: 2px solid rgb(173, 17, 17);
+    outline: none;
+}
+
+.error-message {
+    color: rgb(198,6,6);
+    font-size: 0.85rem;
+    margin-top: 4px;
+}

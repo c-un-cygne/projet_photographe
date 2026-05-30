@@ -29,10 +29,10 @@ def signup():
         db_users = db['users']
 
         if db_users.find_one({'username': request.form['username']}):
-            return render_template('front/signup.html', erreur="Nom d'utilisateur déjà pris.")
+            return render_template('front/signup.html', erreur="Username already exists.")
         
         if request.form['password'] != request.form['confirm_password']:
-            return render_template('front/signup.html', erreur="Les mots de passe ne correspondent pas.")
+            return render_template('front/signup.html', erreur="Passwords aren't the same.")
         
         db_users.insert_one({
             'username': request.form['username'],
