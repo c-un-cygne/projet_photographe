@@ -2,6 +2,8 @@
 {%extends 'front/base.html'%}
 {%block content%}
 
+<a href="/404">here</a>
+
 <section class="columns-2 md:columns-3 lg:columns-4 gap-4 p-6 space-y-4">
     {%for photo in photos%}
         <a href="/index/{{photo['_id']}}" class="block mb-4 break-inside-avoid group">
