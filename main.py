@@ -4,13 +4,15 @@ from bson.objectid import ObjectId
 from werkzeug.utils import secure_filename
 import os
 from dotenv import load_dotenv
-import bcrypt
+from flask_bcrypt import Bcrypt
 import math
 
 load_dotenv()
 
 app = Flask("Focal")
 app.secret_key = os.getenv('SECRET_KEY', 'change-this-secret-key')  # Nécessaire pour session et flash
+
+bcrypt = Bcrypt(app)
 
 mongo = os.getenv('MONGO_URI')
 client = MongoClient(mongo)
