@@ -196,7 +196,10 @@ def feed():
 def map_page():
     lat = request.args.get('lat')
     lng = request.args.get('lng')
-    photos = list(db['photos'].find({}))
+    
+    all_photos = list(db['photos'].find({}))
+    photos = [p for p in all_photos if 'location_lat' in p and 'location_long' in p]
+    
     photo_dist = []
     if lat and lng:
         for i in photos:
@@ -205,7 +208,10 @@ def map_page():
             dist = math.sqrt(dx**2+dy**2)
             photo_dist.append((i,dist))
         photo_dist = sorted(photo_dist, key=lambda x: x[1])
-    photos_sorted = [p[0] for p in photo_dist]
+        photos_sorted = [p[0] for p in photo_dist]
+    else:
+        photos_sorted = photos
+    
     return render_template('front/map.html', lat=lat, lng=lng, photos=photos_sorted)
 
 #-----------ADMIN-----------
